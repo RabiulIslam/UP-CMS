@@ -1,0 +1,486 @@
+<div class="row">
+	<div class="col-sm-6">
+		<span *ngIf="is_heading_shown"
+		      style="font-size: 25px;">
+			<div fxLayout="row"
+			     fxLayoutAlign="start center"
+			     fxLayoutGap="10px">
+				<button mat-icon-button
+				        (click)="onLocationBack()"
+				        color="accent">
+					<img src="assets/images/actions/back.png"
+					     alt="">
+				</button>
+				<span>{{isEditing? 'EDIT': 'ADD'}} {{heading_label}}</span>
+			</div>
+		</span>
+	</div>
+	<div *ngIf="!is_child">
+		<div *ngIf="!isEditing"
+		     class="col-sm-6"
+		     style="text-align: right">
+
+
+			<div class="form-group col-sm-6"
+			     style="padding: 0 10px 0 0;">
+
+			</div>
+			<div class="form-group col-sm-6"
+			     style="padding: 0;text-align: left;">
+				<input type="file"
+				       accept=".csv"
+				       (change)="convertFile($event)"
+				       placeholder="Search"
+				       class="form-control" />
+			</div>
+			<br>
+
+			<button class="btn btn-primary round-elem"
+			        style="background: #af1f70; border-color: #af1f70;height: 30px;padding: 4px 14px;"
+			        (click)="onUploadCSV()">UPLOAD CSV
+			</button>
+			<a download
+			   target="_blank"
+			   href="assets/Outlets_Sample.csv"
+			   class="btn btn-primary round-elem"
+			   style="background: #af1f70; border-color: #af1f70;height: 30px;padding: 4px 14px;">SAMPLE
+			</a>
+		</div>
+	</div>
+</div>
+
+<form [formGroup]="Form"
+      (ngSubmit)="doSubmit()">
+	<div style="margin-top: 20px"
+	     fxLayout="row"
+	     fxLayoutAlign="space-between start"
+	     fxLayoutWrap>
+
+		<div fxFlex="74">
+			<div fxLayout="row"
+			     fxLayoutAlign="start start"
+			     fxLayoutGap="10px"
+			     fxLayoutWrap>
+				<div fxFlex.xl="32"
+				     fxFlex.lg="48"
+				     fxFlex.md="48">
+					<div class="form-group mb-0">
+						<mat-form-field style="width: 100%; margin-bottom: 10px">
+							<input matInput
+							       formControlName="name"
+							       type="text"
+							       required
+							       placeholder="Outlet Name">
+							<mat-error *ngIf="getValue('name')?.invalid && (getValue('name')?.dirty || getValue('name')?.touched)">Outlet
+								Name is
+								required</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
+				<div fxFlex.xl="32"
+				     fxFlex.lg="48"
+				     fxFlex.md="48">
+					<div class="form-group mb-0">
+						<mat-form-field style="width: 100%; margin-bottom: 10px">
+							<input matInput
+							       formControlName="search_tags"
+							       type="text"
+							       required
+							       placeholder="Search Tags">
+							<mat-error *ngIf="getValue('search_tags')?.invalid && (getValue('search_tags')?.dirty || getValue('search_tags')?.touched)">Search
+								Tags is required</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
+
+				<div fxFlex.xl="32"
+				     fxFlex.lg="48"
+				     fxFlex.md="48">
+					<div class="form-group mb-0">
+
+						<mat-form-field style="width: 100%; margin-bottom: 10px">
+							<input matInput
+							       formControlName="phone"
+							       type="text"
+							       mask="99999999999999999999"
+							       maxlength="20"
+							       required
+							       placeholder="Phone">
+							<mat-error *ngIf="getValue('phone')?.invalid && (getValue('phone')?.dirty || getValue('phone')?.touched)">Phone
+								is required</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
+				<div fxFlex.xl="32"
+				     fxFlex.lg="48"
+				     fxFlex.md="48">
+					<div class="form-group mb-0">
+						<mat-form-field style="width: 100%; margin-bottom: 10px">
+							<input matInput
+							       formControlName="address"
+							       type="text"
+							       required
+							       placeholder="Neighborhood">
+							<mat-error *ngIf="getValue('address')?.invalid && (getValue('address')?.dirty || getValue('address')?.touched)">Address
+								is required</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
+				<div fxFlex.xl="32"
+				     fxFlex.lg="48"
+				     fxFlex.md="48">
+					<div class="form-group mb-0">
+						<mat-form-field style="width: 100%; margin-bottom: 10px">
+							<input matInput
+							       formControlName="image_name"
+							       type="text"
+							       required
+							       placeholder="Image Name">
+							<mat-hint>(xyz.jpg, xyz.png, xyz.jpeg)</mat-hint>
+							<mat-error *ngIf="getValue('image_name')?.invalid && (getValue('image_name')?.dirty || getValue('image_name')?.touched)">Image
+								Name
+								is required</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
+				<div fxFlex.xl="32"
+				     fxFlex.lg="48"
+				     fxFlex.md="48">
+					<div class="form-group mb-0">
+						<mat-form-field style="width: 100%; margin-bottom: 10px">
+							<input matInput
+							       formControlName="logo_name"
+							       type="text"
+							       required
+							       placeholder="Logo Name">
+							<mat-hint>(xyz.jpg, xyz.png, xyz.jpeg)</mat-hint>
+							<mat-error *ngIf="getValue('logo_name')?.invalid && (getValue('logo_name')?.dirty || getValue('logo_name')?.touched)">Logo
+								Name
+								is required</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
+				<div fxFlex.xl="32"
+				     fxFlex.lg="48"
+				     fxFlex.md="48">
+					<div class="form-group mb-0">
+						<mat-form-field style="width: 100%; margin-bottom: 10px">
+							<input matInput
+							       formControlName="SKU"
+							       type="text"
+							       
+							       placeholder="SKU">
+							<mat-error *ngIf="getValue('SKU')?.invalid && (getValue('SKU')?.dirty || getValue('SKU')?.touched)">SKU
+								is required</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
+				<!-- <div fxFlex.xl="32"
+				     fxFlex.lg="48"
+				     fxFlex.md="48">
+					<div class="form-group mb-0">
+						<mat-form-field style="width: 100%; margin-bottom: 10px">
+							<input matInput
+							       formControlName="latitude"
+							       type="number"
+							       required
+							       placeholder="Latitude">
+							<mat-error *ngIf="getValue('latitude')?.invalid && (getValue('latitude')?.dirty || getValue('latitude')?.touched)">Latitude
+								is required</mat-error>
+						</mat-form-field>
+					</div>
+				</div> -->
+
+				<div fxFlex.xl="32"
+				     fxFlex.lg="48"
+				     fxFlex.md="48">
+					<div class="form-group mb-0">
+						<mat-form-field style="width: 100%; margin-bottom: 10px">
+							<input matInput
+							       formControlName="latlng"
+							       type="text"
+							       required
+							       placeholder="Latitude and Longitude">
+							<mat-hint>Enter comma seprated number values.</mat-hint>
+							<mat-error *ngIf="getValue('latlng')?.invalid && (getValue('latlng')?.dirty || getValue('latlng')?.touched)">Latitude
+								and Longitude
+								is required</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
+
+				<!-- <div fxFlex.xl="32"
+				     fxFlex.lg="48"
+				     fxFlex.md="48">
+					<div class="form-group mb-0">
+
+						<mat-form-field style="width: 100%; margin-bottom: 10px">
+							<input matInput
+							       formControlName="neighborhood"
+							       type="text"
+							       required
+							       placeholder="Neighborhood">
+							<mat-error *ngIf="getValue('neighborhood')?.invalid && (getValue('neighborhood')?.dirty || getValue('neighborhood')?.touched)">Neighborhood
+								is required</mat-error>
+						</mat-form-field>
+					</div>
+				</div> -->
+				<div fxFlex.xl="32"
+				     fxFlex.lg="48"
+				     fxFlex.md="48">
+					<div class="form-group mb-0">
+
+						<mat-form-field style="width: 100%; margin-bottom: 10px">
+							<input matInput
+							       formControlName="pin"
+							       mask="9999"
+							       type="text"
+							       required
+							       placeholder="Pin">
+							<mat-error *ngIf="getValue('pin')?.invalid && (getValue('pin')?.dirty || getValue('pin')?.touched)">Pin is
+								required</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
+
+
+				<div fxFlex.xl="32"
+				     fxFlex.lg="48"
+				     fxFlex.md="48">
+					<div class="form-group mb-0">
+						<mat-form-field style="width: 100%; margin-bottom: 10px">
+							<mat-select placeholder="Categories"
+							            required
+							            formControlName="category_ids"
+							            multiple>
+								<mat-option *ngFor="let cat of Categories"
+								            [value]="cat.id">
+									{{cat.name}}
+								</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div>
+
+
+				<div fxFlex.xl="32"
+				     fxFlex.lg="48"
+				     fxFlex.md="48">
+					<div class="form-group mb-0">
+						<mat-form-field style="width: 100%; margin-bottom: 10px">
+							<mat-select formControlName="special"
+							            placeholder="Special">
+								<mat-option value="0">No</mat-option>
+								<mat-option value="1">Yes</mat-option>
+							</mat-select>
+							<mat-error *ngIf="getValue('special')?.invalid && (getValue('special')?.dirty || getValue('special')?.touched)">Special
+								is required</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
+
+				<div fxFlex.xl="32"
+				     fxFlex.lg="48"
+				     fxFlex.md="48">
+					<div class="form-group mb-0">
+						<mat-form-field style="width: 100%; margin-bottom: 10px">
+
+							<mat-select [disabled]="isGenderDisabled" formControlName="type"
+							            placeholder="Gender">
+								<mat-option value="2">All</mat-option>
+								<mat-option value="0">Gents</mat-option>
+								<mat-option value="1">Ladies</mat-option>
+							</mat-select>
+							<mat-error *ngIf="getValue('type')?.invalid && (getValue('type')?.dirty || getValue('type')?.touched)">Gender is
+								required</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
+
+				<div *ngIf="!is_child"
+				     fxFlex.xl="32"
+				     fxFlex.lg="48"
+				     fxFlex.md="48">
+					<div class="form-group mb-0">
+						<mat-form-field style="width: 100%; margin-bottom: 10px">
+							<input type="text"
+							       placeholder="Organization"
+							       matInput
+							       formControlName="merchantObject"
+							       [matAutocomplete]="auto">
+							<mat-autocomplete #auto="matAutocomplete"
+							                  [displayWith]="displayFn">
+								<mat-option *ngFor="let option of filteredOptions | async"
+								            [value]="option">
+									{{option.name}}
+								</mat-option>
+							</mat-autocomplete>
+							<mat-error *ngIf="getValue('merchantObject')?.invalid && (getValue('merchantObject')?.dirty || getValue('merchantObject')?.touched)">Organization
+								is required</mat-error>
+						</mat-form-field>
+
+					</div>
+				</div>
+
+				<div fxFlex.xl="32"
+				     fxFlex.lg="48"
+				     fxFlex.md="48">
+					<div class="form-group mb-0">
+						<div class="form-group mb-0">
+
+							<mat-form-field style="width: 100%; margin-bottom: 10px">
+								<textarea cols="10"
+								          rows="1"
+								          matInput
+								          formControlName="description"
+								          type="text"
+								          required
+								          placeholder="Description"></textarea>
+								<mat-error *ngIf="getValue('description')?.invalid && (getValue('description')?.dirty || getValue('description')?.touched)">Description
+									is required</mat-error>
+							</mat-form-field>
+						</div>
+					</div>
+				</div>
+
+				<div fxFlex.xl="32"
+				     fxFlex.lg="48"
+				     fxFlex.md="48">
+					<div class="form-group mb-0">
+						<mat-form-field style="width: 100%; margin-bottom: 10px">
+							<textarea cols="10"
+							          rows="1"
+							          matInput
+							          formControlName="timings"
+							          type="text"
+							          required
+							          placeholder="Timings"></textarea>
+							<mat-error *ngIf="getValue('start_timing')?.invalid && (getValue('start_timing')?.dirty || getValue('start_timing')?.touched)">Contract
+								Start Time is required</mat-error>
+						</mat-form-field>
+					</div>
+				</div>
+				<div fxFlex.xl="32"
+				     fxFlex.lg="48"
+				     fxFlex.md="48">
+					<multi-tag-input (onTagAdd)="onTagAdd($event)"
+					                 [emails]="outlet?.emails"
+					                 [required]="true"
+					                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+					                 placeholder="Emails"></multi-tag-input>
+				</div>
+			</div>
+		</div>
+		<div fxFlex="25">
+			<label style="width: 100%;">Select Image
+				<span style="font-size: 12px;"> (square image):</span>
+
+				<!--
+				<span style="float: right;font-size: 12px; color: #ff2c54"
+				      *ngIf="getValue('image')?.invalid && (getValue('image')?.dirty || getValue('image')?.touched)">Image is
+					required</span>-->
+			</label>
+			<file-picker (onFileSelect)="onFileSelect($event)"
+			             [isIconHidden]="false"
+			             [image]="getImage('image')"
+			             controlName="image"
+			             type="Square"
+			             [size]="{width: 132, height: 132}">
+			</file-picker>
+
+			<span style="float: right;font-size: 12px; color: #ff2c54"
+			      *ngIf="errorMsgimage">{{errorMsgimage}}</span>
+
+			<label style="width: 100%;">Select Logo:
+				<span style="font-size: 12px;"> (square logo):</span>
+				<!--<span style="float: right;font-size: 12px; color: #ff2c54"
+				      *ngIf="getValue('logo')?.invalid && (getValue('logo')?.dirty || getValue('logo')?.touched)">Logo is required</span>-->
+			</label>
+			<file-picker (onFileSelect)="onFileSelect($event)"
+			             [isIconHidden]="false"
+			             [image]="getImage('logo')"
+			             controlName="logo"
+			             type="Square"
+			             [size]="{width: 72, height: 72}">
+			</file-picker>
+
+
+			<span style="float: right;font-size: 12px; color: #ff2c54"
+			      *ngIf="errorMsglogo">{{errorMsglogo}}</span>
+		</div>
+	</div>
+
+
+	<div class="row">
+		<div style="margin-top: 20px"
+		     class="col-sm-12">
+			<ng-container *ngIf="is_button_shown">
+				<button type="submit"
+				        *ngIf="!isEditing"
+				        [disabled]="Form.invalid || isLoading"
+				        class="btn btn-primary round-elem"
+				        style="background: #af1f70; border-color: #af1f70">
+					ADD OUTLET
+					<!-- <span>{{isEditing? 'UPDATE': 'ADD'}} OUTLET</span> -->
+				</button>
+			</ng-container>
+			<button type="submit"
+			        *ngIf="isEditing"
+			        [disabled]="Form.invalid || isLoading"
+			        class="btn btn-primary round-elem"
+			        style="background: #af1f70; border-color: #af1f70">
+				UPDATE OUTLET
+			</button>
+			<img *ngIf="isLoading"
+			     class="loader-btn-image"
+			     src="assets/images/view-loader.gif">
+		</div>
+
+	</div>
+</form>
+
+<div *ngIf="isEditing"
+     style="max-height: 50vh;overflow: auto;margin-top: 20px;"
+     class="data-table">
+	<table class="table table-responsive table-striped"
+	       style="width:100%; margin-top: 15px">
+		<thead>
+			<tr>
+				<th>title</th>
+				<th>Time Remaining</th>
+				<th>Start Date</th>
+				<th>End Date</th>
+				<th>Status</th>
+				<th style="text-align: center">Update Status</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let deal of Offers">
+				<td [title]="deal.title">
+					<span (click)="onDealNameClick(deal)"
+					      class="on-hover">{{deal.title}}</span>
+				</td>
+				<td>{{deal.remaining_days == null || deal.remaining_days == ''? 'N/A' : deal.remaining_days}}</td>
+				<td>{{deal.start_datetime == null ? 'N/A' : deal.start_datetime}}</td>
+				<td>{{deal.end_datetime == null ? 'N/A' : deal.end_datetime}}</td>
+				<td>
+					<span *ngIf="deal.active == 1"
+					      style="background: green;color: white;padding: 3px 7px;width: 46px;border-radius: 3px;">Enabled</span>
+					<span *ngIf="deal.active == 0"
+					      style="background: red;color: white;padding: 3px 7px;width: 46px;border-radius: 3px;">Disabled</span>
+				</td>
+				<td style="text-align: center; width: 100px;">
+					<mat-slide-toggle [disabled]="outlet.active == 0"
+					                  (change)="onChangeDealStatus(deal)"
+					                  [(ngModel)]="deal.slide"
+					                  color="accent"></mat-slide-toggle>
+				</td>
+			</tr>
+			<tr *ngIf="Offers.length == 0">
+				<td colspan="100"
+				    style="text-align: center">No record found.
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

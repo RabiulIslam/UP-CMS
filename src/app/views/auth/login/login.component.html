@@ -1,0 +1,78 @@
+<div class="login-container">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-logo">
+                    <img alt=""
+                         src="assets/images/logo.png">
+                </div>
+
+                <div class="wrapper-page">
+                    <div class="row">
+
+                        <form [formGroup]="theLoginForm"
+                              (ngSubmit)="doLogin()"
+                              novalidate>
+
+                            <div style="text-align: center; margin-bottom: 20px;font-size: 18px;">
+                                Login here
+                            </div>
+                            <div class="text-pink"
+                                 style="text-align: center;font-size: 11px;margin-bottom: 10px;"
+                                 *ngIf="failureAlert">
+                                {{alertMsg}}
+                            </div>
+
+                            <div style="position: relative;">
+                                <div style="margin-top: 20px;"
+                                     class="form-group">
+                                    <mat-form-field style="width: 100%"
+                                                    floatPlaceholder="auto">
+                                        <input matInput
+                                               formControlName="email"
+                                               type="text"
+                                               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                                               required
+                                               placeholder="Email">
+                                        <mat-error *ngIf="email.invalid && (email.dirty || email.touched)">Email is required</mat-error>
+                                    </mat-form-field>
+                                </div>
+
+                                <div style="margin-top: 20px;"
+                                     class="form-group">
+                                    <mat-form-field style="width: 100%"
+                                                    floatPlaceholder="auto">
+                                        <input matInput
+                                               formControlName="password"
+                                               type="password"
+                                               required
+                                               placeholder="Password">
+                                        <mat-error *ngIf="password.invalid && (password.dirty || password.touched)">Password is required</mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="form-group text-right"
+                                     style="font-size: 12px;">
+                                    Forgot Password?
+                                    <a routerLink="/auth/forgot-password">Click here</a>
+                                </div>
+
+                                <div style="margin-top: 20px;"
+                                     class="text-center">
+                                    <button class="btn btn-primary round-elem"
+                                            style="background: #af1f70;width: 100px; border-color: #af1f70"
+                                            type="submit"
+                                            [disabled]="email.invalid || password.invalid">
+                                        Login
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

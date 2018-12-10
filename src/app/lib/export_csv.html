@@ -1,0 +1,56 @@
+<div style="min-width: 200px;">
+    <div class="content-head clearfix">
+        <div style="font-size: 25px;"
+             class="title">Export CSV</div>
+    </div>
+    <form [formGroup]="Form"
+          style=" min-height: 100px; margin-top: 20px;"
+          (ngSubmit)="onSubmitClick()"
+          novalidate>
+        <div class="row">
+            <div class="col-sm-12">
+                Select date range to export csv.
+            </div>
+            <div style="text-align: center"
+                 class="col-sm-12">
+                <div class="form-group mb-0">
+                    <mat-form-field style="width: 100%">
+                        <input matInput
+                               readonly
+                               [owlDateTime]="dateRange"
+                               [owlDateTimeTrigger]="dateRange"
+                               [(ngModel)]="selectedDateRange"
+                               [ngModelOptions]="{standalone: true}"
+                               (dateTimeChange)="onSelectDateRange()"
+                               selectMode="range"
+                               type="text"
+                               placeholder="Select Range">
+                        <i matSuffix
+                           class="glyphicon glyphicon-time"></i>
+                        <owl-date-time pickerType="calendar"
+                                       #dateRange></owl-date-time>
+                        <mat-error *ngIf="getValue('dateRange')?.invalid && (getValue('dateRange')?.dirty || getValue('dateRange')?.touched)">Range
+                            is required</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-sm-12"
+                 style="text-align: right;">
+
+                <button mat-raised-button
+                        color="primary"
+                        class="btn btn-clear"
+                        [disabled]="isLoading"
+                        type="button"
+                        (click)="onCancelClick()">Cancel</button>
+
+                <button mat-raised-button
+                        color="primary"
+                        class="btn btn-submit btn-primary"
+                        [disabled]="isLoading"
+                        type="button"
+                        (click)="onSubmitClick()">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>

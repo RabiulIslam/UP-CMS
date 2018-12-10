@@ -1,0 +1,121 @@
+<div class="row">
+	<app-loader [totalRecords]="ArrayCSVCount"
+	            [completedRecords]="ArrayCSV.length"
+	            [loaderMessage]="loaderMessage"></app-loader>
+	<div class="col-sm-6">
+		<span style="font-size: 25px;">
+			<div fxLayout="row"
+			     fxLayoutAlign="start center"
+			     fxLayoutGap="10px">
+				<button *ngIf="id != 'All'"
+				        mat-icon-button
+				        (click)="onLocationBack()"
+				        color="accent">
+					<img src="assets/images/actions/back.png"
+					     alt="">
+				</button>
+				<span>ORDERS</span>
+			</div>
+		</span>
+	</div>
+	<div class="col-sm-6"
+	     style="text-align: right">
+		<div class="form-group col-sm-3"
+		     style="padding: 0 10px 0 0;">
+			<!-- <select class="form-control">
+				<option value="">All</option>
+
+			</select> -->
+		</div>
+		<div class="form-group col-sm-9"
+		     style="padding: 0;text-align: left;">
+			<!-- <input type="text"
+				       placeholder="Search"
+					   class="form-control" />
+					    -->
+			<div class="input-group">
+				<input autocomplete="false"
+				       type="text"
+				       maxlength="50"
+				       [(ngModel)]="search"
+				       (keyup)="onSearchOrder()"
+				       class="form-control"
+				       placeholder="Search">
+				<span style="cursor: pointer;"
+				      (click)="gerOrdersList(1)"
+				      class="input-group-addon">
+					<i class="glyphicon glyphicon-search"></i>
+
+				</span>
+			</div>
+		</div>
+		<br>
+		<button class="btn btn-primary round-elem"
+		        style="background: #af1f70; border-color: #af1f70"
+				[disabled]="Orders.length == 0"
+		        (click)="onExportCSV()">Export CSV
+		</button>
+	</div>
+</div>
+<base-loader>
+	<div class="data-table">
+		<table class="table table-responsive table-striped"
+		       style="width:100%; margin-top: 15px">
+			<thead>
+				<tr>
+					<th style="width: 70px;">NO.</th>
+					<th>title</th>
+					<th>outlet name</th>
+					<th>outlet address</th>
+					<th>User Name</th>
+					<th>review</th>
+					<th>savings</th>
+					<th>CREATED AT</th>
+					<th style="text-align: center">ACTIONS</th>
+				</tr>
+			</thead>
+			<tbody>
+
+				<tr *ngFor="let order of Orders">
+					<td>{{order.id}}</td>
+					<td [title]="order.title">{{order.title}}</td>
+					<td [title]="order.outlet_name">{{order.outlet_name}}</td>
+					<td [title]="order.outlet_address">{{order.outlet_address}}</td>
+					<td [title]="order.user_name">{{order.user_name}}</td>
+					<td>{{order.review}}</td>
+					<td>{{order.approx_saving}}</td>
+					<td>{{order.order_created_at}}</td>
+					<td style="text-align: center; width: 200px;">
+						<i title="Review"
+						   (click)="onViewReview(order)"
+						   class="action-btn">
+							<img width="18"
+							     src="assets/images/actions/subscribe-log.png"
+							     alt="">
+						</i>
+						<!-- <i title="Review"
+					   style="cursor: not-allowed;"
+					   *ngIf="order.review == 'No'"
+					   class="action-btn">
+						<img width="18"
+						     src="assets/images/actions/subscribe-log.png"
+						     alt="">
+					</i> -->
+					</td>
+				</tr>
+				<tr *ngIf="Orders.length == 0">
+					<td colspan="100"
+					    style="text-align: center">No record found.</td>
+
+				</tr>
+
+			</tbody>
+		</table>
+	</div>
+
+	<app-pagination *ngIf="Orders.length > 0"
+	                (setPage)="setPage($event)"
+	                [perPage]="perPage"
+	                [totalPages]="totalPages"
+	                [currentPage]="currentPage"></app-pagination>
+</base-loader>
