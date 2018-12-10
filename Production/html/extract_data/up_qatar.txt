@@ -1,0 +1,92 @@
+INTO OUTFILE 'D:/xampp/htdocs/AndPercent/up_qatar/phones.csv' FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\n';
+
+UPDATE `merchants` SET `name` = TRIM(`name`);
+UPDATE `merchants` SET `pin` = NULL WHERE TRIM(`pin`) = '';
+UPDATE `merchants` SET `name` = NULL WHERE TRIM(`name`) = '';
+UPDATE `merchants` SET `image` = NULL WHERE TRIM(`image`) = '';
+UPDATE `merchants` SET `email` = NULL WHERE TRIM(`email`) = '';
+UPDATE `merchants` SET `phone` = NULL WHERE TRIM(`phone`) = '';
+UPDATE `merchants` SET `phone` = NULL WHERE TRIM(`phone`) = '0';
+UPDATE `merchants` SET `phone` = NULL WHERE TRIM(`phone`) = '00000000';
+UPDATE `merchants` SET `gender` = NULL WHERE TRIM(`gender`) = '';
+UPDATE `merchants` SET `emails` = NULL WHERE TRIM(`emails`) = '';
+UPDATE `merchants` SET `phones` = NULL WHERE TRIM(`phones`) = '';
+UPDATE `merchants` SET `phones` = NULL WHERE TRIM(`phones`) = '0';
+UPDATE `merchants` SET `phones` = NULL WHERE TRIM(`phones`) = '00000000';
+UPDATE `merchants` SET `search_tags` = NULL WHERE TRIM(`search_tags`) = '';
+#UPDATE `merchants` SET `term_and_conditions` = NULL WHERE TRIM(`term_and_conditions`) = '';
+
+UPDATE `outlets` SET `name` = TRIM(`name`);
+UPDATE `outlets` SET `pin` = NULL WHERE TRIM(`pin`) = '';
+UPDATE `outlets` SET `type` = NULL WHERE TRIM(`type`) = '';
+UPDATE `outlets` SET `name` = NULL WHERE TRIM(`name`) = '';
+UPDATE `outlets` SET `logo` = NULL WHERE TRIM(`logo`) = '';
+UPDATE `outlets` SET `image` = NULL WHERE TRIM(`image`) = '';
+UPDATE `outlets` SET `phone` = NULL WHERE TRIM(`phone`) = '';
+UPDATE `outlets` SET `phone` = NULL WHERE TRIM(`phone`) = '0';
+UPDATE `outlets` SET `phone` = NULL WHERE TRIM(`phone`) = '00000000';
+UPDATE `outlets` SET `special` = NULL WHERE TRIM(`special`) = '';
+UPDATE `outlets` SET `address` = NULL WHERE TRIM(`address`) = '';
+UPDATE `outlets` SET `phones` = NULL WHERE TRIM(`phones`) = '';
+UPDATE `outlets` SET `phones` = NULL WHERE TRIM(`phones`) = '0';
+UPDATE `outlets` SET `phones` = NULL WHERE TRIM(`phones`) = '00000000';
+UPDATE `outlets` SET `search_tags` = NULL WHERE TRIM(`search_tags`) = '';
+#UPDATE `outlets` SET `description` = NULL WHERE TRIM(`description`) = '';
+UPDATE `outlets` SET `neighborhood` = NULL WHERE TRIM(`neighborhood`) = '';
+UPDATE `outlets` SET `timings` = 'Everyday 8:00 - 10:00' WHERE `timings` = "" OR `timings` IS NULL;
+
+UPDATE `offers` SET `renew` = '1';
+UPDATE `offers` SET `per_user` = '1';
+UPDATE `offers` SET `title` = TRIM(`title`);
+UPDATE `offers` SET `image` = NULL WHERE TRIM(`image`) = '';
+UPDATE `offers` SET `special` = NULL WHERE TRIM(`special`) = '';
+UPDATE `offers` SET `valid_for` = NULL WHERE TRIM(`valid_for`) = '';
+UPDATE `offers` SET `search_tags` = NULL WHERE TRIM(`search_tags`) = '';
+UPDATE `offers` SET `special_type` = NULL WHERE TRIM(`special_type`) = '';
+UPDATE `offers` SET `valid_for` = 'Both' WHERE `valid_for` = "" OR `valid_for` IS NULL;
+
+UPDATE `users` SET `app_id` = '1';
+UPDATE `users` SET `name` = TRIM(`name`);
+UPDATE `users` SET `name` = NULL WHERE TRIM(`name`) = '';
+UPDATE `users` SET `email` = NULL WHERE TRIM(`email`) = '';
+UPDATE `users` SET `phone` = NULL WHERE TRIM(`phone`) = '';
+UPDATE `users` SET `phone` = NULL WHERE TRIM(`phone`) = '0';
+UPDATE `users` SET `phone` = NULL WHERE TRIM(`phone`) = '00000000';
+UPDATE `users` SET `offer_id` = NULL WHERE `offer_id` <= 0;
+UPDATE `users` SET `DOB` = null WHERE `DOB` = '1970-01-01';
+UPDATE `users` SET `gender` = NULL WHERE TRIM(`gender`) = '';
+UPDATE `users` SET `network` = NULL WHERE TRIM(`network`) = '';
+UPDATE `users` SET `password` = NULL WHERE TRIM(`password`) = '';
+UPDATE `users` SET `nationality` = NULL WHERE TRIM(`nationality`) = '';
+UPDATE `users` SET `push_permission` = '1', `location_permission` = '1';
+
+DELETE FROM `orders` WHERE `user_id` NOT IN(SELECT `id` FROM `users`);
+DELETE FROM `orders` WHERE `offer_id` NOT IN(SELECT `id` FROM `offers`);
+
+UPDATE `subscriptions` SET `strip_charged_id` = NULL;
+UPDATE `subscriptions` SET `phone` = NULL WHERE TRIM(`phone`) = '';
+UPDATE `subscriptions` SET `phone` = NULL WHERE TRIM(`phone`) = '0';
+UPDATE `subscriptions` SET `phone` = NULL WHERE TRIM(`phone`) = '00000000';
+UPDATE `subscriptions` SET `accesscode_id` = NULL WHERE TRIM(`accesscode_id`) = '';
+UPDATE `subscriptions` SET `accesscode_id` = NULL WHERE TRIM(`accesscode_id`) = '0';
+UPDATE `subscriptions` SET `subscriptionContractId` = NULL WHERE TRIM(`subscriptionContractId`) = '';
+UPDATE `subscriptions` SET `subscriptionContractId` = NULL WHERE TRIM(`subscriptionContractId`) = '0';
+
+UPDATE `category` SET `status` = "1";
+UPDATE `category` SET `name` = TRIM(`name`);
+UPDATE `category` SET `image` = NULL WHERE TRIM(`image`) = '';
+#UPDATE `category` SET `description` = NULL WHERE TRIM(`description`) = '';
+
+UPDATE `outlet_category` SET `category_id` = '17' WHERE `category_id` IN('29');
+UPDATE `outlet_category` SET `category_id` = '30' WHERE `category_id` IN('18','28','64');
+UPDATE `outlet_category` SET `category_id` = '31' WHERE `category_id` IN('15');
+UPDATE `outlet_category` SET `category_id` = '65' WHERE `category_id` IN('65');
+
+SELECT * FROM `outlet_category` GROUP BY `category_id` ASC;
+
+categories => 15,17,64,65
+
+Fun & Leisure:		15 <= 31
+Food and Drink:		17 <= 29
+Beauty and Health:	64 <= 18, 28, 30
+Retail & Services:	65

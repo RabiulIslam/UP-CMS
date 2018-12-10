@@ -1,0 +1,12 @@
+RewriteEngine on
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d 
+RewriteCond %{QUERY_STRING} ^(.*)$
+
+#RewriteRule . index.php
+
+<IfModule mod_rewrite.c>
+	RewriteEngine on
+	RewriteRule ^(.*?)$ index.php?method=$1&url=$1 [L,QSA]
+</IfModule>

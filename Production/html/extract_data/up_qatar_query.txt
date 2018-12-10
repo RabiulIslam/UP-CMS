@@ -1,0 +1,9 @@
+UPDATE `outlets` SET `timings` = 'Everyday 8:00 - 10:00' WHERE `timings` = "" OR `timings` IS NULL;
+
+UPDATE `offers` SET `valid_for` = 'Both' WHERE `valid_for` = "" OR `valid_for` IS NULL;
+
+UPDATE `users` SET `push_permission` = '1', `location_permission` = '1';
+
+UPDATE `category` SET `status` = "1";
+
+SELECT * FROM `outlet_category` GROUP BY `category_id` ASC;
